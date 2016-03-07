@@ -5,17 +5,47 @@
 %}
 
 %token INCLUDE
+%token HEADERF
+%token VARNAME
+%token FUNCTION
+%token BLOCK_BEGIN
+%token BLOCK_END
+%token END_OF_FILE
+%token DELIM
+%token INT
+%token FLOAT
 
 %%
 
 program:
-		program include '\n'	{ printf("%s\n", "include file"); }
+		program content END_OF_FILE
 		|
 		;				
 
-include:
-		INCLUDE 				{printf("%s\n", " print something");}
+content:
+		include content
+		| statement content
 		|
+		;
+
+statement:
+		declaration statement
+		| datatype FUNCTION	BLOCK_BEGIN statement BLOCK_END			{printf("%s\n", "Main");}
+		|
+		;
+
+
+declaration:
+		datatype VARNAME DELIM										{printf("%s\n", "Declared Variable");}
+		;
+
+datatype:
+		INT
+		|FLOAT
+		;
+
+include:
+		INCLUDE '<' HEADERF '>' 										{printf("%s\n", "Encountered an include file");}
 		;
 %%
 

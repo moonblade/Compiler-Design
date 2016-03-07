@@ -45,11 +45,29 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    INCLUDE = 258
+    INCLUDE = 258,
+    HEADERF = 259,
+    VARNAME = 260,
+    FUNCTION = 261,
+    BLOCK_BEGIN = 262,
+    BLOCK_END = 263,
+    END_OF_FILE = 264,
+    DELIM = 265,
+    INT = 266,
+    FLOAT = 267
   };
 #endif
 /* Tokens.  */
 #define INCLUDE 258
+#define HEADERF 259
+#define VARNAME 260
+#define FUNCTION 261
+#define BLOCK_BEGIN 262
+#define BLOCK_END 263
+#define END_OF_FILE 264
+#define DELIM 265
+#define INT 266
+#define FLOAT 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
