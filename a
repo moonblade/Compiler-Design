@@ -1,6 +1,8 @@
-#include<stdio.h>
+#include<iostream>
 int main()
 {
-	int a;
-	int b;
+	int a=10;
+	int b=100;
+	int d=b+a;
+	cout<<d;
 }

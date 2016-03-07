@@ -12,6 +12,10 @@
 
 "int" 						return INT;
 
+"cout<<" 					return OUTPUT;
+
+[0-9]+						yylval = atoi(yytext);return INTEGER;
+
 ";"							return DELIM;
 
 "{"							return BLOCK_BEGIN;
@@ -20,16 +24,13 @@
 
 [a-z_][a-z0-9_]*"()"		return FUNCTION;
 
-[a-z_][a-z0-9_]*			return VARNAME;
+[a-z]						yylval= *yytext-'a';return VARNAME;
 
-[a-z]+(".h")?				{
-								yylval = *yytext;
-								return HEADERF;
-							}
+[a-z]+(".h")?				return HEADERF;
 
-[><]						return *yytext;
+[><=+*]						return *yytext;
 
-[ \t]
+[ \t\n]
 
 <<EOF>>						return END_OF_FILE;
 
