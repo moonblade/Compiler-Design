@@ -1,0 +1,4 @@
+#!/bin/bash
+yacc -d cpgm.y
+flex cpgm.l
+gcc y.tab.c lex.yy.c
