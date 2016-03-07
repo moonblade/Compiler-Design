@@ -1,8 +1,10 @@
 #include<iostream>
 int main()
 {
-	int a=10;
-	int b=100;
+	int a;
+	cin>>a;
+	int b;
+	cin>>b;
 	int d=b+a;
 	cout<<d;
 }

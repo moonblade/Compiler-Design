@@ -47,8 +47,8 @@ extern int yydebug;
   {
     INCLUDE = 258,
     OUTPUT = 259,
-    HEADERF = 260,
-    VARNAME = 261,
+    INPUT = 260,
+    HEADERF = 261,
     FUNCTION = 262,
     INTEGER = 263,
     BLOCK_BEGIN = 264,
@@ -56,14 +56,15 @@ extern int yydebug;
     END_OF_FILE = 266,
     DELIM = 267,
     INT = 268,
-    FLOAT = 269
+    FLOAT = 269,
+    VARNAME = 270
   };
 #endif
 /* Tokens.  */
 #define INCLUDE 258
 #define OUTPUT 259
-#define HEADERF 260
-#define VARNAME 261
+#define INPUT 260
+#define HEADERF 261
 #define FUNCTION 262
 #define INTEGER 263
 #define BLOCK_BEGIN 264
@@ -72,6 +73,7 @@ extern int yydebug;
 #define DELIM 267
 #define INT 268
 #define FLOAT 269
+#define VARNAME 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

@@ -14,6 +14,8 @@
 
 "cout<<" 					return OUTPUT;
 
+"cin>>" 					return INPUT;
+
 [0-9]+						yylval = atoi(yytext);return INTEGER;
 
 ";"							return DELIM;
@@ -24,7 +26,7 @@
 
 [a-z_][a-z0-9_]*"()"		return FUNCTION;
 
-[a-z]						yylval= *yytext-'a';return VARNAME;
+[a-z_]						yylval= *yytext-'a';return VARNAME;
 
 [a-z]+(".h")?				return HEADERF;
 
