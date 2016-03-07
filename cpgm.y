@@ -7,11 +7,24 @@
 %}
 
 %token INCLUDE OUTPUT INPUT HEADERF 
-%token FUNCTION INTEGER 
-%token BLOCK_BEGIN BLOCK_END END_OF_FILE 
+%token FUNCTION 
+%token END_OF_FILE 
 %token DELIM INT FLOAT
+%token WHILE
+%token INTEGER
 %token VARNAME
 
+%union
+{
+	char *string;
+	int number;	
+}
+
+%type<number> expression VARNAME
+%type<number> INTEGER
+
+%left '+' '-'
+%left '*' '/'
 
 %%
 
@@ -29,7 +42,7 @@ content:
 
 statement:
 		declaration statement
-		| datatype FUNCTION	BLOCK_BEGIN statement BLOCK_END			/*{printf("%s\n", "Function Parsed");}*/
+		| datatype FUNCTION	'{' statement '}'			/*{printf("%s\n", "Function Parsed");}*/
 		| inputOutput DELIM statement
 		|
 		;
@@ -47,9 +60,9 @@ declaration:
 expression:
 		INTEGER														
 		|expression '+' expression 									{$$ = $1 + $3;}
+		|expression '-' expression 									{$$ = $1 - $3;}
 		|expression '*' expression 									{$$ = $1 * $3;}
 		|expression '/' expression 									{$$ = $1 / $3;}
-		|expression '-' expression 									{$$ = $1 - $3;}
 		|'(' expression  ')'										{$$ = $2;}
 		|VARNAME													{$$ = sym[$1];}
 		;
@@ -65,7 +78,7 @@ include:
 %%
 
 void yyerror(char *s) {
-    //fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "%s\n", s);
 }
 
 int main(int argc,char *argv[]) {

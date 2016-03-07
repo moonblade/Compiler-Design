@@ -12,25 +12,24 @@
 
 "int" 						return INT;
 
+"while"						return WHILE;
+
 "cout<<" 					return OUTPUT;
 
 "cin>>" 					return INPUT;
 
-[0-9]+						yylval = atoi(yytext);return INTEGER;
+[0-9]+						yylval.number = atoi(yytext);return INTEGER;
 
 ";"							return DELIM;
 
-"{"							return BLOCK_BEGIN;
-
-"}"							return BLOCK_END;
-
 [a-z_][a-z0-9_]*"()"		return FUNCTION;
 
-[a-z_]						yylval= *yytext-'a';return VARNAME;
+[a-z_]						yylval.number= *yytext-'a';return VARNAME;
+
 
 [a-z]+(".h")?				return HEADERF;
 
-[><=+*]						return *yytext;
+[><=+*{}]					return *yytext;
 
 [ \t\n]
 

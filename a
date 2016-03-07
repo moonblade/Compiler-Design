@@ -4,7 +4,9 @@ int main()
 	int a;
 	cin>>a;
 	int b;
+	int c;
 	cin>>b;
-	int d=b+a;
+	cin>>c;
+	int d=a*b+c;
 	cout<<d;
 }

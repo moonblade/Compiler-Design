@@ -50,14 +50,13 @@ extern int yydebug;
     INPUT = 260,
     HEADERF = 261,
     FUNCTION = 262,
-    INTEGER = 263,
-    BLOCK_BEGIN = 264,
-    BLOCK_END = 265,
-    END_OF_FILE = 266,
-    DELIM = 267,
-    INT = 268,
-    FLOAT = 269,
-    VARNAME = 270
+    END_OF_FILE = 263,
+    DELIM = 264,
+    INT = 265,
+    FLOAT = 266,
+    WHILE = 267,
+    INTEGER = 268,
+    VARNAME = 269
   };
 #endif
 /* Tokens.  */
@@ -66,18 +65,28 @@ extern int yydebug;
 #define INPUT 260
 #define HEADERF 261
 #define FUNCTION 262
-#define INTEGER 263
-#define BLOCK_BEGIN 264
-#define BLOCK_END 265
-#define END_OF_FILE 266
-#define DELIM 267
-#define INT 268
-#define FLOAT 269
-#define VARNAME 270
+#define END_OF_FILE 263
+#define DELIM 264
+#define INT 265
+#define FLOAT 266
+#define WHILE 267
+#define INTEGER 268
+#define VARNAME 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 18 "cpgm.y" /* yacc.c:1909  */
+
+	char *string;
+	int number;	
+
+#line 87 "y.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
