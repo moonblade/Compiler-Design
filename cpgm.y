@@ -1,7 +1,7 @@
 %{
 	#include <stdio.h>
 	#include <string.h>
-//	#define YYDEBUG 1
+	//#define YYDEBUG 1
 	int yylex(void);
 	void yyerror(char *);	
 	int sym[26];
@@ -25,7 +25,7 @@
 %token WHILE
 %token INTEGER
 %token VARNAME
-%token IDENTIFIER
+%token IDENTIFIER STRING
 
 %union
 {
@@ -36,6 +36,7 @@
 %type<number> expression
 %type<number> INTEGER
 %type<string> IDENTIFIER
+%type<string> STRING
 
 %left '+' '-'
 %left '*' '/'
@@ -51,22 +52,23 @@ program:
 statement:
 		declaration statement
 		| datatype FUNCTION	'{' statement '}' statement			/*{printf("%s\n", "Function Parsed");}*/
-		| inputOutput DELIM statement
-		| assignment
+		| inputOutput statement
+		| assignment statement
 		|
 		;
 
 inputOutput:
-		OUTPUT IDENTIFIER												{printf("%d\n",get($2));}
-		|INPUT IDENTIFIER												{scanf("%d",&temp);save($2,temp);}
+		OUTPUT IDENTIFIER DELIM												{printf("%d\n",get($2));}
+		|INPUT IDENTIFIER DELIM												{scanf("%d",&temp);save($2,temp);}
+		|OUTPUT STRING DELIM												{printf("%s",$2);}
 		;
 
 assignment:
-		IDENTIFIER '=' expression										{save($1,$3);}
+		IDENTIFIER '=' expression DELIM										{save($1,$3);}
 		;
 
 declaration:
-		datatype IDENTIFIER DELIM											/*{int $2;}{printf("%s\n", $2);}*/
+		datatype IDENTIFIER DELIM											{save($2,0);}/*{printf("%s\n", $2);}*/
 		| datatype IDENTIFIER '=' expression DELIM							{save($2,$4);}
 		;
 
@@ -82,7 +84,6 @@ expression:
 
 datatype:
 		INT
-		|FLOAT
 		;
 
 include:

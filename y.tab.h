@@ -56,7 +56,8 @@ extern int yydebug;
     WHILE = 266,
     INTEGER = 267,
     VARNAME = 268,
-    IDENTIFIER = 269
+    IDENTIFIER = 269,
+    STRING = 270
   };
 #endif
 /* Tokens.  */
@@ -72,6 +73,7 @@ extern int yydebug;
 #define INTEGER 267
 #define VARNAME 268
 #define IDENTIFIER 269
+#define STRING 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -83,7 +85,7 @@ union YYSTYPE
 	char *string;
 	int number;	
 
-#line 87 "y.tab.h" /* yacc.c:1909  */
+#line 89 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

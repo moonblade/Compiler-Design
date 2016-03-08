@@ -1,12 +1,17 @@
 #include<iostream.h>
 int main()
 {
-	int abc=2;
-	cin>>abc;
-	int b=abc;
-	cin>>b;
-	int c;
-	cin>>c;
-	int d=abc*b+c;
-	cout<<d;
+	int first=2;
+	cout<<"Enter First Number : ";
+	cin>>first;
+	cout<<"Enter Second Number : ";
+	int second;
+	cin>>second;
+	cout<<"Enter Third Number : ";
+	int third;
+	cin>>third;
+	int fourth;
+	cout<<"Result is (first+second)*third : ";
+	fourth=(first+second)*third;
+	cout<<fourth;
 }

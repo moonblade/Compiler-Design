@@ -3,6 +3,7 @@
 %{
 	#include "y.tab.h"
 	#include <stdlib.h>
+	#include <string.h>
 	void yyerror(char *);
 %}
 
@@ -22,6 +23,12 @@
 
 ";"							return DELIM;
 
+\".*\" 						{
+    						yylval.string = (char*)calloc(strlen(yytext)-1, sizeof(char));
+    						strncpy(yylval.string, &yytext[1], strlen(yytext)-2);
+    						return STRING;
+							}
+
 [a-z_][a-z0-9_]*"()"		return FUNCTION;
 
 
@@ -29,7 +36,7 @@
 
 [a-z_][a-z0-9_]*			yylval.string = strdup(yytext); return IDENTIFIER;
 
-[><=+*{}]						return *yytext;
+[><=+*{}()]						return *yytext;
 
 [ \t\n]
 
