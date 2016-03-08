@@ -24,17 +24,14 @@
 
 [a-z_][a-z0-9_]*"()"		return FUNCTION;
 
-[a-z]						yylval.number= *yytext-'a';return VARNAME;
 
-[a-z_][a-z0-9_]*			yylval.number=0; yylval.string = strdup(yytext); return IDENTIFIER;
+[a-z]+(".h")				return HEADERF;
 
-[a-z]+(".h")?				return HEADERF;
+[a-z_][a-z0-9_]*			yylval.string = strdup(yytext); return IDENTIFIER;
 
 [><=+*{}]						return *yytext;
 
 [ \t\n]
-
-<<EOF>>						return END_OF_FILE;
 
 .							yyerror("Unknown Character");
 

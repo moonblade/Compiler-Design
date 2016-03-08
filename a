@@ -1,12 +1,12 @@
-#include<iostream>
+#include<iostream.h>
 int main()
 {
-	int a;
-	cin>>a;
-	int b;
-	int c;
+	int abc=2;
+	cin>>abc;
+	int b=abc;
 	cin>>b;
+	int c;
 	cin>>c;
-	int d=a*b+c;
+	int d=abc*b+c;
 	cout<<d;
 }
