@@ -24,12 +24,13 @@
 
 [a-z_][a-z0-9_]*"()"		return FUNCTION;
 
-[a-z_]						yylval.number= *yytext-'a';return VARNAME;
+[a-z]						yylval.number= *yytext-'a';return VARNAME;
 
+[a-z_][a-z0-9_]*			yylval.number=0; yylval.string = strdup(yytext); return IDENTIFIER;
 
 [a-z]+(".h")?				return HEADERF;
 
-[><=+*{}]					return *yytext;
+[><=+*{}]						return *yytext;
 
 [ \t\n]
 

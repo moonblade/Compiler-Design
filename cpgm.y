@@ -13,6 +13,7 @@
 %token WHILE
 %token INTEGER
 %token VARNAME
+%token IDENTIFIER
 
 %union
 {
@@ -20,41 +21,41 @@
 	int number;	
 }
 
-%type<number> expression VARNAME
+%type<number> expression
 %type<number> INTEGER
+%type<string> IDENTIFIER
 
 %left '+' '-'
 %left '*' '/'
 
 %%
 
-program:
-		content	program 	 									
-		| END_OF_FILE												/*{printf("%s\n", "Program ended");}*/
-		|
-		;				
-
 content:
 		include content
 		| statement content
-		| 
+		| END_OF_FILE
 		;
 
 statement:
 		declaration statement
 		| datatype FUNCTION	'{' statement '}'			/*{printf("%s\n", "Function Parsed");}*/
 		| inputOutput DELIM statement
+		| assignment
 		|
 		;
 
 inputOutput:
-		OUTPUT VARNAME												{printf("%d\n",sym[$2]);}
-		|INPUT VARNAME												{scanf("%d",&sym[$2]);}
+		OUTPUT IDENTIFIER												{printf("%d\n",$2);}
+		|INPUT IDENTIFIER												{scanf("%d",&$2);}
+		;
+
+assignment:
+		IDENTIFIER '=' expression										{*$1=$3;}
 		;
 
 declaration:
-		datatype VARNAME DELIM											/*{printf("%s\n", "Declared Variable");}*/
-		| datatype VARNAME '=' expression DELIM							{sym[$2]=$4;/*printf("var assigned : %d\n", $4);*/}
+		datatype IDENTIFIER DELIM											/*{int $2;}*/{printf("%s\n", $2);}
+		| datatype IDENTIFIER '=' expression DELIM							{*$2=$4;/*printf("var assigned : %d\n", $4);*/}
 		;
 
 expression:
@@ -64,7 +65,7 @@ expression:
 		|expression '*' expression 									{$$ = $1 * $3;}
 		|expression '/' expression 									{$$ = $1 / $3;}
 		|'(' expression  ')'										{$$ = $2;}
-		|VARNAME													{$$ = sym[$1];}
+		|IDENTIFIER													{$$ = *$1;}
 		;
 
 datatype:
@@ -78,7 +79,7 @@ include:
 %%
 
 void yyerror(char *s) {
-    fprintf(stderr, "%s\n", s);
+    //fprintf(stderr, "%s\n", s);
 }
 
 int main(int argc,char *argv[]) {
