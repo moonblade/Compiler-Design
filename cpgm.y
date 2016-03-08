@@ -20,9 +20,9 @@
 %}
 
 %token INCLUDE OUTPUT INPUT HEADERF 
-%token FUNCTION 
+%token FUNCTION INOP OUTOP
 %token DELIM INT FLOAT
-%token WHILE
+%token WHILE _IF _ELSE
 %token INTEGER
 %token VARNAME
 %token IDENTIFIER STRING
@@ -51,29 +51,40 @@ program:
 
 statement:
 		declaration statement
-		| datatype FUNCTION	'{' statement '}' statement			/*{printf("%s\n", "Function Parsed");}*/
+		| datatype FUNCTION	'{' statement '}' statement		
 		| inputOutput statement
 		| assignment statement
+		| _IF '(' expression ')' '{' statement '}' elsepart statement
 		|
 		;
 
+elsepart:
+		_ELSE '{' statement '}'
+		|
+		;
 inputOutput:
-		OUTPUT IDENTIFIER DELIM												{printf("%d\n",get($2));}
-		|INPUT IDENTIFIER DELIM												{scanf("%d",&temp);save($2,temp);}
-		|OUTPUT STRING DELIM												{printf("%s",$2);}
+		OUTPUT OUTOP IDENTIFIER DELIM								{printf("%d\n",get($3));}
+		|INPUT INOP IDENTIFIER DELIM								{scanf("%d",&temp);save($3,temp);}
+		|OUTPUT OUTOP STRING DELIM									{printf("%s",$3);}
+		|OUTPUT OUTOP expression DELIM								{printf("%d",$3);}
 		;
 
 assignment:
-		IDENTIFIER '=' expression DELIM										{save($1,$3);}
+		IDENTIFIER '=' expression DELIM								{save($1,$3);}
 		;
 
 declaration:
-		datatype IDENTIFIER DELIM											{save($2,0);}/*{printf("%s\n", $2);}*/
-		| datatype IDENTIFIER '=' expression DELIM							{save($2,$4);}
+		datatype IDENTIFIER DELIM									{save($2,0);}/*{printf("%s\n", $2);}*/
+		| datatype IDENTIFIER '=' expression DELIM					{save($2,$4);}
 		;
 
 expression:
 		INTEGER														
+		|expression '>' expression 									{if($1>$3){$$ = 1;}else{$$ = 0;}}
+		|expression '<' expression 									{if($1<$3){$$ = 1;}else{$$ = 0;}}
+		|expression '<''=' expression 								{if($1<=$4){$$ = 1;}else{$$ = 0;}}
+		|expression '>''=' expression 								{if($1>=$4){$$ = 1;}else{$$ = 0;}}
+		|expression '=''=' expression 								{if($1==$4){$$ = 1;}else{$$ = 0;}}
 		|expression '+' expression 									{$$ = $1 + $3;}
 		|expression '-' expression 									{$$ = $1 - $3;}
 		|expression '*' expression 									{$$ = $1 * $3;}
@@ -87,7 +98,7 @@ datatype:
 		;
 
 include:
-		INCLUDE '<' HEADERF '>' 										/*{printf("%s\n", "Encountered an include file");}*/
+		INCLUDE '<' HEADERF '>' 									/*{printf("%s\n", "Encountered an include file");}*/
 		;
 %%
 

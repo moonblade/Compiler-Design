@@ -15,9 +15,17 @@
 
 "while"						return WHILE;
 
-"cout<<" 					return OUTPUT;
+"if"						return _IF;
 
-"cin>>" 					return INPUT;
+"else"						return _ELSE;
+
+"cout" 						return OUTPUT;
+
+"cin"	 					return INPUT;
+
+">>"						return INOP;
+
+"<<"						return OUTOP;
 
 [0-9]+						yylval.number = atoi(yytext);return INTEGER;
 

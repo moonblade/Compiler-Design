@@ -50,14 +50,18 @@ extern int yydebug;
     INPUT = 260,
     HEADERF = 261,
     FUNCTION = 262,
-    DELIM = 263,
-    INT = 264,
-    FLOAT = 265,
-    WHILE = 266,
-    INTEGER = 267,
-    VARNAME = 268,
-    IDENTIFIER = 269,
-    STRING = 270
+    INOP = 263,
+    OUTOP = 264,
+    DELIM = 265,
+    INT = 266,
+    FLOAT = 267,
+    WHILE = 268,
+    _IF = 269,
+    _ELSE = 270,
+    INTEGER = 271,
+    VARNAME = 272,
+    IDENTIFIER = 273,
+    STRING = 274
   };
 #endif
 /* Tokens.  */
@@ -66,14 +70,18 @@ extern int yydebug;
 #define INPUT 260
 #define HEADERF 261
 #define FUNCTION 262
-#define DELIM 263
-#define INT 264
-#define FLOAT 265
-#define WHILE 266
-#define INTEGER 267
-#define VARNAME 268
-#define IDENTIFIER 269
-#define STRING 270
+#define INOP 263
+#define OUTOP 264
+#define DELIM 265
+#define INT 266
+#define FLOAT 267
+#define WHILE 268
+#define _IF 269
+#define _ELSE 270
+#define INTEGER 271
+#define VARNAME 272
+#define IDENTIFIER 273
+#define STRING 274
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -85,7 +93,7 @@ union YYSTYPE
 	char *string;
 	int number;	
 
-#line 89 "y.tab.h" /* yacc.c:1909  */
+#line 97 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
